@@ -18,13 +18,21 @@ const Shot: React.FC<{
 }> = ({ src, fadeIn, fadeOut, end, panDir }) => {
   const frame = useCurrentFrame();
   const fadeLen = 22;
+  const isLast = fadeOut === end;
 
-  const opacity = interpolate(
-    frame,
-    [fadeIn, fadeIn + fadeLen, fadeOut, end],
-    [0, 1, 1, fadeOut === end ? 1 : 0],
-    { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' },
-  );
+  // Fix: avoid duplicate values in inputRange when last shot has no fade-out
+  const opacity = isLast
+    ? interpolate(frame, [fadeIn, fadeIn + fadeLen], [0, 1], {
+        extrapolateLeft: 'clamp',
+        extrapolateRight: 'clamp',
+      })
+    : interpolate(
+        frame,
+        [fadeIn, fadeIn + fadeLen, fadeOut, end],
+        [0, 1, 1, 0],
+        { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' },
+      );
+
   const panX = interpolate(frame, [fadeIn, end], [panDir * 4, 0], {
     extrapolateLeft: 'clamp',
     extrapolateRight: 'clamp',
@@ -53,28 +61,25 @@ const Shot: React.FC<{
 export const Section2: React.FC = () => {
   const frame = useCurrentFrame();
 
-  // Pastel morning tint builds in over first 40 frames
   const pastelOpacity = interpolate(frame, [0, 40], [0, 1], {
     extrapolateRight: 'clamp',
   });
-
-  // Bokeh edge blur fades in
   const bokehOpacity = interpolate(frame, [20, 60], [0, 1], {
     extrapolateRight: 'clamp',
   });
 
   return (
     <AbsoluteFill style={{ backgroundColor: '#f0e8e2', overflow: 'hidden' }}>
-      {/* Shot 1 — premium product close-up, pan left */}
-      <Shot src={img('31')} fadeIn={0}   fadeOut={58}  end={78}  panDir={-1} />
-      {/* Shot 2 — chic accessory detail, pan right */}
-      <Shot src={img('37')} fadeIn={52}  fadeOut={118} end={138} panDir={1}  />
-      {/* Shot 3 — woman on course, morning sunlight, pan left */}
-      <Shot src={img('39')} fadeIn={112} fadeOut={168} end={188} panDir={-1} />
-      {/* Shot 4 — 4 women playing golf under sunlight, pan right, holds to end */}
+      {/* Shot 1 — bag product close-up */}
+      <Shot src={img('48')} fadeIn={0}   fadeOut={58}  end={78}  panDir={-1} />
+      {/* Shot 2 — bag product detail */}
+      <Shot src={img('49')} fadeIn={52}  fadeOut={118} end={138} panDir={1}  />
+      {/* Shot 3 — bag product glamour shot */}
+      <Shot src={img('50')} fadeIn={112} fadeOut={168} end={188} panDir={-1} />
+      {/* Shot 4 — women playing golf under sunlight, holds to end */}
       <Shot src={img('42')} fadeIn={162} fadeOut={210} end={210} panDir={1}  />
 
-      {/* Soft pastel morning tint — peach / blush / lavender */}
+      {/* Soft pastel morning tint */}
       <AbsoluteFill
         style={{
           background:
@@ -85,7 +90,7 @@ export const Section2: React.FC = () => {
         }}
       />
 
-      {/* Bokeh radial vignette — soft lens blur simulation */}
+      {/* Bokeh radial vignette */}
       <AbsoluteFill
         style={{
           background:
@@ -98,8 +103,7 @@ export const Section2: React.FC = () => {
       {/* Bottom gradient depth */}
       <AbsoluteFill
         style={{
-          background:
-            'linear-gradient(to top, rgba(0,0,0,0.45) 0%, transparent 38%)',
+          background: 'linear-gradient(to top, rgba(0,0,0,0.45) 0%, transparent 38%)',
           pointerEvents: 'none',
         }}
       />
@@ -107,8 +111,7 @@ export const Section2: React.FC = () => {
       {/* Top gradient depth */}
       <AbsoluteFill
         style={{
-          background:
-            'linear-gradient(to bottom, rgba(0,0,0,0.18) 0%, transparent 22%)',
+          background: 'linear-gradient(to bottom, rgba(0,0,0,0.18) 0%, transparent 22%)',
           pointerEvents: 'none',
         }}
       />
