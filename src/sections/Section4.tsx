@@ -15,17 +15,14 @@ export const Section4: React.FC = () => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
 
-  // ── Fade in from black ─────────────────────────────────────────────────────
   const fadeIn = interpolate(frame, [0, 40], [0, 1], {
     extrapolateRight: 'clamp',
   });
 
-  // ── Slow zoom out throughout (1.12 → 1.0) ─────────────────────────────────
   const bgScale = interpolate(frame, [0, 240], [1.14, 1.0], {
     extrapolateRight: 'clamp',
   });
 
-  // ── Secondary image cross-fades in at mid-point ──────────────────────────
   const img2Opacity = interpolate(frame, [85, 135], [0, 1], {
     extrapolateLeft: 'clamp',
     extrapolateRight: 'clamp',
@@ -35,17 +32,14 @@ export const Section4: React.FC = () => {
     extrapolateRight: 'clamp',
   });
 
-  // ── Golden hour glow ─────────────────────────────────────────────────────
   const goldenOpacity = interpolate(frame, [0, 55], [0, 1], {
     extrapolateRight: 'clamp',
   });
 
-  // ── Cinematic letterbox bars slide in ──────────────────────────────────
   const barH = interpolate(frame, [0, 35], [0, 38], {
     extrapolateRight: 'clamp',
   });
 
-  // ── Logo spring entrance ───────────────────────────────────────────────────
   const logoP = spring({
     frame: frame - 52,
     fps,
@@ -58,7 +52,6 @@ export const Section4: React.FC = () => {
   const logoScale = interpolate(logoP, [0, 1], [0.82, 1.0]);
   const logoY = interpolate(logoP, [0, 1], [20, 0]);
 
-  // ── Divider line expands from center ──────────────────────────────────────
   const lineP = spring({
     frame: frame - 80,
     fps,
@@ -70,7 +63,6 @@ export const Section4: React.FC = () => {
     extrapolateRight: 'clamp',
   });
 
-  // ── Tagline slides up ───────────────────────────────────────────────────────
   const tagP = spring({
     frame: frame - 98,
     fps,
@@ -82,7 +74,6 @@ export const Section4: React.FC = () => {
   });
   const tagY = interpolate(tagP, [0, 1], [16, 0]);
 
-  // ── CTA fades in ─────────────────────────────────────────────────────────────
   const ctaP = spring({
     frame: frame - 130,
     fps,
@@ -94,7 +85,6 @@ export const Section4: React.FC = () => {
   });
   const ctaY = interpolate(ctaP, [0, 1], [12, 0]);
 
-  // ── Final cinematic fade to black ───────────────────────────────────────
   const fadeOut = interpolate(frame, [200, 240], [0, 1], {
     extrapolateLeft: 'clamp',
     extrapolateRight: 'clamp',
@@ -103,7 +93,6 @@ export const Section4: React.FC = () => {
   return (
     <AbsoluteFill style={{ backgroundColor: '#000', overflow: 'hidden' }}>
 
-      {/* Primary background — group on golf course, slow zoom out */}
       <AbsoluteFill
         style={{
           opacity: fadeIn,
@@ -111,13 +100,9 @@ export const Section4: React.FC = () => {
           transformOrigin: 'center center',
         }}
       >
-        <Img
-          src={img('53')}
-          style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-        />
+        <Img src={img('53')} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
       </AbsoluteFill>
 
-      {/* Secondary image — cross-fades in for visual richness */}
       <AbsoluteFill
         style={{
           opacity: img2Opacity * fadeIn,
@@ -125,13 +110,9 @@ export const Section4: React.FC = () => {
           transformOrigin: 'center center',
         }}
       >
-        <Img
-          src={img('29')}
-          style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-        />
+        <Img src={img('29')} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
       </AbsoluteFill>
 
-      {/* Golden hour warm radial glow */}
       <AbsoluteFill
         style={{
           background:
@@ -142,7 +123,6 @@ export const Section4: React.FC = () => {
         }}
       />
 
-      {/* Deep warm bottom gradient — frames the brand overlay */}
       <AbsoluteFill
         style={{
           background:
@@ -151,16 +131,13 @@ export const Section4: React.FC = () => {
         }}
       />
 
-      {/* Soft top gradient */}
       <AbsoluteFill
         style={{
-          background:
-            'linear-gradient(to bottom, rgba(0,0,0,0.35) 0%, transparent 28%)',
+          background: 'linear-gradient(to bottom, rgba(0,0,0,0.35) 0%, transparent 28%)',
           pointerEvents: 'none',
         }}
       />
 
-      {/* Edge vignette */}
       <AbsoluteFill
         style={{
           background:
@@ -169,38 +146,14 @@ export const Section4: React.FC = () => {
         }}
       />
 
-      {/* Cinematic letterbox bars */}
-      <div
-        style={{
-          position: 'absolute',
-          top: 0, left: 0, right: 0,
-          height: barH,
-          backgroundColor: '#000',
-          pointerEvents: 'none',
-        }}
-      />
-      <div
-        style={{
-          position: 'absolute',
-          bottom: 0, left: 0, right: 0,
-          height: barH,
-          backgroundColor: '#000',
-          pointerEvents: 'none',
-        }}
-      />
+      <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: barH, backgroundColor: '#000', pointerEvents: 'none' }} />
+      <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: barH, backgroundColor: '#000', pointerEvents: 'none' }} />
 
-      {/* Brand identity overlay — centered */}
       <AbsoluteFill
-        style={{
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          pointerEvents: 'none',
-        }}
+        style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', pointerEvents: 'none' }}
       >
         <div style={{ textAlign: 'center' }}>
 
-          {/* Logo */}
           <Img
             src={staticFile('brand_logo.png')}
             style={{
@@ -208,14 +161,12 @@ export const Section4: React.FC = () => {
               objectFit: 'contain',
               opacity: logoOpacity,
               transform: `scale(${logoScale}) translateY(${logoY}px)`,
-              filter:
-                'drop-shadow(0 4px 22px rgba(0,0,0,0.55)) brightness(1.08)',
+              filter: 'drop-shadow(0 4px 22px rgba(0,0,0,0.55)) brightness(1.08)',
               display: 'block',
               margin: '0 auto',
             }}
           />
 
-          {/* Animated gold divider */}
           <div
             style={{
               width: lineW,
@@ -227,7 +178,6 @@ export const Section4: React.FC = () => {
             }}
           />
 
-          {/* Tagline */}
           <div
             style={{
               fontSize: 19,
@@ -240,10 +190,9 @@ export const Section4: React.FC = () => {
               textShadow: '0 1px 14px rgba(0,0,0,0.75)',
             }}
           >
-            Where Style Meets the Fairway
+            The gifts your cartner actually wants.
           </div>
 
-          {/* CTA */}
           <div
             style={{
               fontSize: 13,
@@ -262,13 +211,8 @@ export const Section4: React.FC = () => {
         </div>
       </AbsoluteFill>
 
-      {/* Final fade to black */}
       <AbsoluteFill
-        style={{
-          backgroundColor: '#000',
-          opacity: fadeOut,
-          pointerEvents: 'none',
-        }}
+        style={{ backgroundColor: '#000', opacity: fadeOut, pointerEvents: 'none' }}
       />
     </AbsoluteFill>
   );
