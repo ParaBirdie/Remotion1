@@ -243,7 +243,7 @@ export const Section4: React.FC = () => {
             Where Style Meets the Fairway
           </div>
 
-          {/* CTA — replace with your actual URL / handle */}
+          {/* CTA */}
           <div
             style={{
               fontSize: 13,
@@ -257,7 +257,7 @@ export const Section4: React.FC = () => {
               textShadow: '0 1px 8px rgba(0,0,0,0.7)',
             }}
           >
-            birdiegirl.com
+            birdiegirlgolf.com
           </div>
         </div>
       </AbsoluteFill>
